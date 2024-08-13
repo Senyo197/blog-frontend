@@ -1,0 +1,104 @@
+
+import Layout from "@/components/new-index/layoutForIndex";
+
+
+import { getAllPostsForToolsSubcategoryPage, getPostsByPageForToolsSubcategoryPage } from '@/lib/api'
+import ToolboxIndexPage from "@/components/toolbox/ToolboxIndexPage";
+
+
+import get_all_tags from '@/lib/menus/lib/getAllTagsFromMenu'
+import ALL_SLUGS_CATEGORY from '@/lib/menus/chatTools'
+import Footer from "@/components/footer";
+import { createB64WithFallback } from "@/lib/utils/blurHashToDataURL";
+import getSponsors from "@/lib/utils/getSponsors";
+
+const PAGE_SIZE = 15;
+
+const BREADCRUMBS = {
+    pageTitle:'Conversational Design',
+    links:[
+        {name:'Home', slug:'/', svg:<svg className="w-4 h-4 inline -mt-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M19 21H5a1 1 0 0 1-1-1v-9H1l10.327-9.388a1 1 0 0 1 1.346 0L23 11h-3v9a1 1 0 0 1-1 1zM6 19h12V9.157l-6-5.454-6 5.454V19zm2-4h8v2H8v-2z" fill="currentColor"/></svg>},
+        {name:'Toolbox', slug:'/toolbox'},
+        // {name:'UX Tools', slug:'/toolbox/ux-tools/page/1'}
+    ]
+  }
+
+export default function ToolboxPage({allPosts = [], preview, pagination, navSponsor, sponsors}) {
+    //pagination is like {"total":1421,"pageSize":12,"page":2,"pageCount":119}
+
+    return (
+        <>
+        <Layout 
+        sponsor={navSponsor}
+    padding={false}
+       maxWidth={"search-wide max-w-[1320px]"}
+        seo={{
+        title: `Conversational design tools | Prototypr Toolbox | Page ${pagination?.page}`,
+        description:
+          "The best conversational design tools: chatbots, messaging and more.",
+        //   image: "",
+        canonical: `https://prototypr.io/toolbox/conversational-design-tools/page/${pagination?.page}`,
+        url: `https://prototypr.io/toolbox/conversational-design-tools/page/${pagination?.page}`,
+      }}
+        activeNav={'toolbox'} preview={preview}>
+        <ToolboxIndexPage 
+        paginationRoot={`/toolbox/conversational-design-tools`}
+        filterCategories={ALL_SLUGS_CATEGORY}
+        urlRoot={`/toolbox/conversational-design-tools`}
+        title="All Conversational Design Tools"
+        description="From chatbots to messaging tools, discover tools for conversation."
+        pagination={pagination}
+        pageSize={PAGE_SIZE} 
+        allPosts={allPosts} 
+        breadcrumbs={BREADCRUMBS}/>
+        </Layout>
+    <Footer/>
+    </>
+    )
+}
+
+export async function getStaticProps({ preview = null, params}) {
+    const pageSize = PAGE_SIZE
+    const page = params.pageNo
+    var all_tags = get_all_tags(ALL_SLUGS_CATEGORY)
+
+    let allPosts = (await getPostsByPageForToolsSubcategoryPage(preview, pageSize, page, all_tags )) || []
+    allPosts.data?.map(post => {
+        // add blurhash to allPosts images
+        post.attributes.base64 = createB64WithFallback(
+          post?.attributes?.featuredImage?.data?.attributes?.blurhash
+        );
+        post.attributes.logoBase64 = createB64WithFallback(
+          post?.attributes?.logo?.data?.attributes?.blurhash
+        );
+    
+        //this is the part that fails
+        return `/toolbox/${post.attributes.slug}`;
+      })
+
+    const pagination = allPosts.meta.pagination
+
+    const { navSponsor, sponsors } = await getSponsors();
+
+    return {
+        props: {
+            allPosts: allPosts.data, preview, pagination,
+            navSponsor, sponsors
+        },revalidate: 20,
+    }
+  }
+
+export async function getStaticPaths() {
+    var all_tags = get_all_tags(ALL_SLUGS_CATEGORY)
+
+    const allPosts = (await getAllPostsForToolsSubcategoryPage(null, PAGE_SIZE, 0, all_tags)) || []
+    const pagination = allPosts.meta.pagination
+    const pageCount = pagination.pageCount
+    const pageCountArr = new Array(pageCount).fill(' ');
+    return {
+        paths: pageCountArr && pageCountArr.map((pageNo, index) => {
+            return `/toolbox/conversational-design-tools/page/${index}`
+        }) || [],
+        fallback: true,
+    }
+}

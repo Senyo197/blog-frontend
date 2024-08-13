@@ -1,0 +1,38 @@
+{
+    "people": [
+      {
+        "name": "Jordan Bowman",
+        "avatar":"/static/avatars/face-1.png",
+        "link":"https://prototypr.io/people/jordanbowman/"        
+      },
+      {
+        "name": "Hoang Nguyen",
+        "avatar":"/static/avatars/face-2.png",
+        "link":"https://prototypr.io/author/hoangnguyen/"        
+      },
+      {
+        "name": "Chew Yune",
+        "avatar":"/static/avatars/face-4.png",
+        "link":"https://prototypr.io/people/jordanbowman/"        
+      },
+      {
+        "name": "Viktorija Bachvarova",
+        "avatar":"/static/avatars/face-3.png",
+        "link":"https://prototypr.io/people/jordanbowman/"        
+      },
+      {
+        "name": "Zoe Chew",
+        "avatar":"/static/avatars/face-5.png",
+        "link":"https://prototypr.io/people/jordanbowman/"        
+      },
+      {
+        "name": "Marcus Hofman",
+        "avatar":"/static/avatars/face-6.png",
+        "link":"https://prototypr.io/people/jordanbowman/"        
+      }
+     
+
+      
+      ]
+  }
+  
