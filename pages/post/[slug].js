@@ -6,12 +6,9 @@ import Container from "@/components/container";
 import useUser from "@/lib/iron-session/useUser";
 import Date from "@/components/date";
 
-// import ProductItem from "@/components/new-index/ProductItem";
-
 const AuthorBio = dynamic(() => import("@/components/authorBio"), {
   ssr: true,
 });
-// const SourcePanel = dynamic(() => import("@/components/new-index/SourcePanel"));
 import { useIntl } from "react-intl";
 
 import Layout from "@/components/layoutForBlogPost";
@@ -41,17 +38,6 @@ import AuthorSidebar from "@/components/AuthorSidebar";
 import LikeButton from "@/components/LikeButton";
 import isoToReadableDate from "@/lib/utils/isoToReadableDate";
 
-// import ToolBackgroundCard from "@/components/v4/card/ToolBackgroundCard";
-const StickyFooterCTA = dynamic(() => import("@/components/StickyFooterCTA"), {
-  ssr: false,
-});
-// const WMPostTracker = dynamic(
-//   () => import("@/components/WebMonetization/WMPostTracker"),
-//   {
-//     ssr: false,
-//   }
-// );
-
 export default function Post({
   post,
   preview,
@@ -59,7 +45,7 @@ export default function Post({
   postContent,
   sponsors,
   navSponsor,
-  date
+  date,
 }) {
   const router = useRouter();
 
@@ -146,7 +132,7 @@ export default function Post({
         padding={false}
         maxWidth="max-w-full mx-auto -mt-[96px] bg-gray-100/20"
       >
-        <div className="w-full h-full grid grid-cols-12 gap-1 mx-auto mx-auto bg-gray-100/20">
+        <div className="w-full h-full grid grid-cols-12 gap-1 mx-auto bg-gray-100/20">
           {user?.isAdmin && (
             <div className="fixed bottom-0 mb-6 z-50 border border-gray-200 bg-white mr-20 right-0 p-2 px-3 rounded-full shadow-sm">
               {/* <button className="p-1 px-3 text-sm text-white bg-purple-600 shadow rounded"> */}
@@ -174,9 +160,6 @@ export default function Post({
 
           {/* <Alert preview={preview} /> */}
           <main className="pb-20 gap-2 col-span-12 lg:col-span-12 px-0 ">
-            {/* {post?.id && process.env.NODE_ENV === "production" && (
-              <WMPostTracker postId={post?.id} post={post} />
-            )} */}
             {router.isFallback ? (
               <h1 className="text-6xl  font-semibold tracking-tighter leading-tight md:leading-tighter mb-5 text-center md:text-left">
                 Loading
@@ -186,17 +169,10 @@ export default function Post({
                 {/* <img src={'/static/images/check.svg'} className="absolute opacity-20 p-6 h-[298px] mt-[60px] top-0 left-0 w-full object-cover"/> */}
 
                 <div className="relative pt-[128px]">
-                  <div
-                    // style={{
-                    //   backgroundImage:
-                    //     "linear-gradient(rgba(32, 52, 144,0.10) 1px, transparent 1px), linear-gradient(to right, rgba(32, 52, 144,0.10) 1px, rgba(247, 247, 247,0.10) 1px)",
-                    //   backgroundSize: "26px 26px",
-                    // }}
-                    className="relative -mt-[96px] md:-mt-0 pt-[64px] md:pt-0 mx-auto w-[1351px] max-w-full z-10 px-3 md:px-3"
-                  >
+                  <div className="relative -mt-[96px] md:-mt-0 pt-[64px] md:pt-0 mx-auto w-[1351px] max-w-full z-10 px-3 md:px-3">
                     {!post.currentLocaleAvailable && <NoticeTranslation />}
 
-                    <div className="pt-4 w-[1350px] max-w-full mx-auto w-full">
+                    <div className="pt-4 w-[1350px] max-w-full mx-auto">
                       <p className="text-left md:px-1 mt-3 md:mt-0 mb-10 text-base tracking-tight text-black/80">
                         <Date dateString={post.attributes.date} />
                       </p>
@@ -217,7 +193,7 @@ export default function Post({
                         author={post.attributes?.author?.data?.attributes}
                         template={post.attributes?.template}
                       />
-                      <div className="w-full flex justify-start w-[1350px] max-w-full mx-auto mt-4 mb-6 md:mb-1 px-0">
+                      <div className="flex justify-start w-[1350px] max-w-full mx-auto mt-4 mb-6 md:mb-1 px-0">
                         <div className="flex flex-col md:flex-row justify-between w-full">
                           {author ? (
                             <div className="mb-4 md:mb-0">
@@ -246,22 +222,8 @@ export default function Post({
                                           <div className="text-lg tracking-tight md:text-xl mb-0 pb-0 hover:underline font-medium">
                                             {authorName}
                                           </div>
-                                          {/* {date && (
-                          <div className="text-base text-black/80">
-                            Published <Date dateString={date} />
-                          </div>
-                        )} */}
                                         </div>
                                       </div>
-                                      {/* <Avatar
-                      date={post.attributes.date}
-                      name={
-                      `${author?.firstName ? author?.firstName:''}
-                        ${author?.lastName ? ' '+author?.lastName:''}
-                        ${(!author?.firstName && !author?.lastName) ? author?.name:''}`
-                      }
-                      picture={avatar}
-                    /> */}
                                     </div>
                                   </Link>
                                 </div>
@@ -278,7 +240,7 @@ export default function Post({
                                     className="flex"
                                   >
                                     <button
-                                      className={`inline-block h-8 capitalize font-medium text-base px-3 tracking-tight cursor-pointer bg-[#e0e4ea] hover:bg-gray-300 hover:text-black transition transition-all duration-400 rounded-full ${index == tags?.length - 1 ? "" : "mr-3"} text-black/80 text-[15px] font-base flex flex-col justify-center mb-2`}
+                                      className={`inline-block h-8 capitalize font-medium text-base px-3 tracking-tight cursor-pointer bg-[#e0e4ea] hover:bg-gray-300 hover:text-black transition-all duration-400 rounded-full ${index == tags?.length - 1 ? "" : "mr-3"} text-black/80 text-[15px] font-base flex flex-col justify-center mb-2`}
                                     >
                                       {tag.attributes.name}
                                     </button>
@@ -288,27 +250,12 @@ export default function Post({
                             })}
                           </div>
                         </div>
-                        {/* <div className=" flex mb-3 justify-center">
-                        {tags.map((tag, index) => {
-                              return (
-                                <Link
-                href={`/toolbox/${tag.attributes.slug}/page/1`}
-                className="my-auto"
-              >
-
-                                <div className={`inline-block capitalize text-base px-3 py-1 cursor-pointer bg-blue-100/60 rounded-full ${index==tags?.length-1?'':'mr-3'} mb-3 text-blue-900 text-[15px] font-base outline outline-1 outline-blue-200 flex flex-col justify-center`}>
-                                  {tag.attributes.name}
-                                </div>
-              </Link>
-                              );
-                            })}
-                      </div> */}
                       </div>
                     </div>
                   </div>
                   <div className="px-4 xl:px-0 max-w-full w-[1350px] mx-auto z-30 -mt-[132px] md:-mt-[86px] relative md:rounded-3xl">
                     <div className="relative rounded-2xl shadow-md max-w-full border border-gray-100/80">
-                      <div className="animate-pulse z-10 absolute top-0 left-0 duration-50  max-w-full md:bg-gray-100 mx-auto z-30 rounded-2xl" />
+                      <div className="animate-pulse z-10 absolute top-0 left-0 duration-50  max-w-full md:bg-gray-100 mx-auto rounded-2xl" />
                       <Image
                         key={image}
                         width={1020}
@@ -325,12 +272,6 @@ export default function Post({
                   <div className="z-0 -mt-4 h-[60%] w-full bg-gradient-to-b from-blue-100/50 to-gray-100/20 absolute top-0 left-0" />
                 </div>
                 <article className="z-10 relative px-6 lg:px-0 max-w-full w-[1350px] mx-auto grid grid-cols-12">
-                  {/* <Head> */}
-                  {/* <title>
-                  {post.attributes?.title} | Prototypr
-                </title> */}
-                  {/* <meta property="og:image" content={post.attributes.ogImage} /> */}
-                  {/* </Head> */}
                   <div className="hidden sticky top-6 mt-8 h-fit lg:col-span-1 lg:block">
                     <LikeButton post={post} user={user} />
                   </div>
@@ -353,11 +294,6 @@ export default function Post({
 
                   <div className="hidden md:block pt-10 col-span-3">
                     <div className="flex justify-end w-full">
-                      {/* <SocialShare
-                        slug={post?.attributes?.slug}
-                        title={title}
-                        authorTwitter={author?.twitter}
-                      /> */}
                       <AuthorSidebar
                         post={post}
                         date={date}
@@ -365,19 +301,9 @@ export default function Post({
                         tags={tags}
                       />
                     </div>
-                    {/* <div className="h-[220px] md:h-[310px] xl:h-[220px] transition transition-all duration-400 hover:h-[290px] mt-8 sticky">
-                        <AdCard
-                          showAdTag={true}
-                          height={
-                            "h-[220px] md:h-[310px] xl:h-[220px] hover:h-[290px]"
-                          }
-                          withBackground={true}
-                          post={navSponsor}
-                        />
-                      </div> */}
                     <div className="flex flex-col justify-evenly h-full">
                       <div className="flex w-full justify-end">
-                        <div className="h-[220px] md:h-[310px] xl:h-[220px] w-full max-w-[274px] transition transition-all duration-400 hover:h-[290px] mt-8 sticky">
+                        <div className="h-[220px] md:h-[310px] xl:h-[220px] w-full max-w-[274px] transition duration-400 hover:h-[290px] mt-8 sticky">
                           <AdCard
                             showAdTag={true}
                             height={
@@ -389,7 +315,7 @@ export default function Post({
                         </div>
                       </div>
                       <div className="flex w-full justify-end">
-                        <div className="h-[220px] md:h-[310px] w-full xl:h-[220px] max-w-[274px] transition transition-all duration-400 hover:h-[290px] mt-8 sticky">
+                        <div className="h-[220px] md:h-[310px] w-full xl:h-[220px] max-w-[274px] transition duration-400 hover:h-[290px] mt-8 sticky">
                           <AdCard
                             showAdTag={true}
                             height={
@@ -406,25 +332,7 @@ export default function Post({
               </>
             )}
           </main>
-
-          {/* <Sidebar
-            tags={tags}
-            author={post.attributes?.author?.data?.attributes}
-            relatedPosts={relatedPosts}
-            paddingTop="hidden md:block pt-[76px]"
-          /> */}
         </div>
-        {/* <div className="grid grid-cols-12">
-          <div className="gap-0 col-span-12 lg:col-span-8">
-          {!user?.isLoggedIn && <StickyFooterCTA title="The best stories every week"buttonText="Sign up for free" />}
-          </div>
-        </div> */}
-        {!user?.isLoggedIn && (
-          <StickyFooterCTA
-            title="Welcome to Prototypr"
-            description="Join today to make posts and grow with us."
-          />
-        )}
       </Container>
       <section className="bg-gray-100 relative">
         <hr className="border-accent-2" />
@@ -446,23 +354,6 @@ export default function Post({
             ) : null}
           </div>
         </div>
-        {/* {post.attributes?.template !== 2 && (
-          <section className="bg-gray-100">
-           <div
-           style={{ maxWidth: "1200px" }}
-           className="px-6 md:px-0 mx-auto pb-12 mt-20"
-         >
-        <SourcePanel
-          titleSize={"lg:text-5xl"}
-          className={
-            "w-full  mb-4 mt-12 border rounded-lg pb-0 pt-8 border-gray-100"
-          }
-          title={intl.formatMessage({ id: "newsletterPanel.title3" })}
-          desc={intl.formatMessage({ id: "newsletterPanel.desc3" })}
-        />
-        </div>
-        </section>
-      )} */}
       </section>
     </Layout>
   );
@@ -528,7 +419,6 @@ export async function getStaticProps({ params, preview = null, locale }) {
 
   html = insertBannerAds(html, navSponsor, sponsors);
 
-  
   const date = isoToReadableDate(post.attributes.date);
 
   return {
@@ -559,7 +449,7 @@ export async function getStaticPaths({ locales }) {
   return {
     paths:
       (allPosts &&
-        allPosts.data?.map(post => {
+        allPosts.data?.map((post) => {
           // console.log(post.attributes.slug)
           return `/post/${post.attributes.slug}`;
         })) ||

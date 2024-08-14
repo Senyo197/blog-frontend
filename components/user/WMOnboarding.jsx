@@ -1,18 +1,17 @@
 import { Wizard, Steps, Step } from "react-albus";
 import { Line } from "rc-progress";
 // import { useRouter } from 'next/router'
-import {useState } from "react";
+import { useState } from "react";
 import TopicsSelect from "./TopicsSelect";
 import InterestsSelect from "./InterestsSelect";
 import NewslettersSelect from "./NewslettersSelect";
 
-
 export default function Onboarding({ allTags, user }) {
   // const router = useRouter()
 
-  const [selectedTopics, setSelectedTopics] = useState(null)
-  const [selectedOptions, setSelectedOptions] = useState(false)
-  const [selectedNewsletters, setSelectedNewsletters] = useState(false)
+  const [selectedTopics, setSelectedTopics] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState(false);
+  const [selectedNewsletters, setSelectedNewsletters] = useState(false);
 
   return (
     <Wizard
@@ -23,18 +22,24 @@ export default function Onboarding({ allTags, user }) {
             <Step
               id="step1"
               render={({ next }) => (
-                <TopicsSelect selectedTopics={selectedTopics} setSelectedTopics={setSelectedTopics} allTags={allTags} user={user} next={next}/>
+                <TopicsSelect
+                  selectedTopics={selectedTopics}
+                  setSelectedTopics={setSelectedTopics}
+                  allTags={allTags}
+                  user={user}
+                  next={next}
+                />
               )}
             />
             <Step
               id="step3"
               render={({ next, previous }) => (
                 <InterestsSelect
-                user={user}
-                next={next}
-                previous={previous}
-                selectedOptions={selectedOptions}
-                setSelectedOptions={setSelectedOptions}
+                  user={user}
+                  next={next}
+                  previous={previous}
+                  selectedOptions={selectedOptions}
+                  setSelectedOptions={setSelectedOptions}
                 />
               )}
             />
@@ -42,11 +47,11 @@ export default function Onboarding({ allTags, user }) {
               id="step2"
               render={({ next, previous }) => (
                 <NewslettersSelect
-                user={user}
-                next={next}
-                previous={previous}
-                selectedOptions={selectedNewsletters}
-                setSelectedOptions={setSelectedNewsletters}
+                  user={user}
+                  next={next}
+                  previous={previous}
+                  selectedOptions={selectedNewsletters}
+                  setSelectedOptions={setSelectedNewsletters}
                 />
               )}
             />
@@ -70,7 +75,8 @@ export default function Onboarding({ allTags, user }) {
                     field on your profile page.
                   </p> */}
                   <p className="text-gray-600 max-w-md mb-3">
-                    Update your public profile with your avatar, name, and links to your social profiles to get verified.
+                    Update your public profile with your avatar, name, and links
+                    to your social profiles to get verified.
                   </p>
                   <div className="flex mx-auto mt-8 items-left justify-start ">
                     <a href="/account">
@@ -91,7 +97,7 @@ export default function Onboarding({ allTags, user }) {
                       aria-label="Go back"
                       type="submit"
                       onClick={() => previous()}
-                      className={`text-base ml-3 px-3 inline z-10 py-2 focus:outline-none focus:ring focus:ring-blue-400 flex justify-center rounded-md cursor-pointer 
+                      className={`text-base ml-3 px-3 inline z-10 py-2 focus:outline-none focus:ring focus:ring-blue-400 justify-center rounded-md cursor-pointer 
                                 bg-white  
                                 duration-200 ease-in-out 
                                 transition`}
@@ -107,8 +113,8 @@ export default function Onboarding({ allTags, user }) {
           </Steps>
           <div
             className={`${
-               step.id == "step4" ? "opacity-0" : ""
-            }  ${ step.id == "step1"?'mt-10':'lg:-mt-5 mt-6'} flex flex-col align-center items-center mx-auto px-3 justify-center`}
+              step.id == "step4" ? "opacity-0" : ""
+            }  ${step.id == "step1" ? "mt-10" : "lg:-mt-5 mt-6"} flex flex-col align-center items-center mx-auto px-3 justify-center`}
             style={{ maxWidth: "250px" }}
           >
             {/* <p className="text-xs text-blue-default mb-2">{steps.indexOf(step) + 1} of {steps.length}</p> */}

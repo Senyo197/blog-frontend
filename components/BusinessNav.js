@@ -97,7 +97,7 @@ export default function BusinessNav({
           style={{ maxWidth: padding === false ? "" : "1200px" }}
         >
           <div
-            className={` transition transition-all duration-700 ease-in-out relative flex items-center justify-between h-16`}
+            className={` transition-all duration-700 ease-in-out relative flex items-center justify-between h-16`}
           >
             <div className="sm:hidden absolute inset-y-0 left-0 flex items-center">
               {/* <!-- Mobile menu button--> */}
@@ -117,7 +117,7 @@ export default function BusinessNav({
             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
               <Link href="/" as="/">
                 <div
-                  className={`flex-shrink-0 flex items-center cursor-pointer transition transition-all duration-300 ease-in-out`}
+                  className={`flex-shrink-0 flex items-center cursor-pointer transition-all duration-300 ease-in-out`}
                 >
                   <img
                     className="lg:block h-8 w-auto"
@@ -140,7 +140,7 @@ export default function BusinessNav({
               {isEditor && <UndoRedoButtons editor={editorInstance} />}
             </div>
             <div
-              className={`hidden sm:block sm:ml-6 transition transition-all duration-500 ease-in-out`}
+              className={`hidden sm:block sm:ml-6 transition-all duration-500 ease-in-out`}
             >
               <div className="flex ">
                 {editorButtons}

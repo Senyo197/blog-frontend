@@ -1,8 +1,6 @@
-// import dynamic from "next/dynamic";
 import useUser from "@/lib/iron-session/useUser";
 import UserMenu from "@/components/Navbar/UserMenu";
 import Link from "next/link";
-// import MenuItems from "@/components/Navbar/parts/MenuItems";
 import LocationMenu from "@/components/Navbar/parts/LocationMenu";
 import {
   NavigationMenu,
@@ -11,24 +9,10 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import MobileActiveLink from "@/components/Navbar/parts/MobileActiveLink";
-// import ActiveLinkNewMenu from "./parts/ActiveLinkNewMenu";
 import NavSponsor from "../v4/badge/NavSponsor";
 import SearchModal from "../SearchModal";
-// import { Waypoint } from "react-waypoint";
 import MenuItems from "@/components/Navbar/parts/MenuItems";
 import NewPostDialog from "./parts/NewPostDialog";
-import { getScrollPercent } from "../StickyFooterCTA";
-// const WMButton = dynamic(() => import("./parts/WMButton"),
-// {
-//   ssr: false,
-// });
-
-// const WMCounter = dynamic(
-//   () => import("@/components/WebMonetization/Counter"),
-//   {
-//     ssr: false,
-//   }
-// );
 
 const Navbar = ({
   collapsed,
@@ -63,12 +47,9 @@ const Navbar = ({
     }, 1000);
   }, [isVisible]);
 
-  // Define the scrollListener inside useEffect or use useCallback
   useEffect(() => {
     const scrollListener = () => {
-      const p = getScrollPercent(); // Assuming getScrollPercent is defined elsewhere
-
-      if (p > 1 && isVisible !== true) {
+      if (window.scrollY > 100 && isVisible !== true) {
         setVisible(true);
       } else {
         setVisible(false);
@@ -98,17 +79,17 @@ const Navbar = ({
     return () => {
       window.removeEventListener("scroll", scrollListener);
     };
-  }, []);
+  }, [isVisible, hideOffTop]);
 
   return (
     <>
       <nav
         id="main-nav"
-        className={` fixed ${hideOffTop ? "-mt-20" : ""} top-0 ${navType == "full" ? "" : "md:top-2"}  w-full transition transition-all duration-1000`}
+        className={` fixed ${hideOffTop ? "-mt-20" : ""} top-0 ${navType == "full" ? "" : "md:top-2"}  w-full transition duration-1000`}
         style={{ zIndex: 99 }}
       >
         <div
-          className={`w-full ${navType == "full" ? "bg-white border-b border-gray-200 " : `${isVisible ? "bg-white bg-opacity-[88%] shadow-sm md:w-[50rem] lg:w-[62rem]" : "md:w-[97%] "}  md:rounded-2xl p-1`} transition transition-all duration-700 search-wide ${
+          className={`w-full ${navType == "full" ? "bg-white border-b border-gray-200 " : `${isVisible ? "bg-white bg-opacity-[88%] shadow-sm md:w-[50rem] lg:w-[62rem]" : "md:w-[97%] "}  md:rounded-2xl p-1`} transition-all duration-700 search-wide ${
             navType == "full"
               ? "max-w-full"
               : maxWidth
@@ -142,69 +123,35 @@ const Navbar = ({
                 <>
                   <img
                     // className={`${isVisible?'':'xl:block w-[0px] absolute opacity-0'} transition transition-all duration-1000 h-8 w-auto`}
-                    className={`xl:hidden transition transition-all duration-1000 h-8 w-auto`}
+                    className={`xl:hidden transition duration-1000 h-8 w-auto`}
                     src="/static/images/logo-small.svg"
-                    // className="block h-10 w-auto mb-2"
-                    // src="/static/images/logo-small-xmas.svg"
                     alt="Prototypr Logo"
                   />
                   <img
-                    className={`xl:block ${isVisible ? "w-[25px] object-left-top object-cover drop-shadow-md" : "object-cover object-left-top w-[109px]"} transition transition-all duration-1000 hidden h-7 w-auto `}
+                    className={`xl:block ${isVisible ? "w-[25px] object-left-top object-cover drop-shadow-md" : "object-cover object-left-top w-[109px]"} transition-all duration-1000 hidden h-7 w-auto `}
                     src={`/static/images/prototypr_logo.svg`}
                     alt="Prototypr Logo"
                   />
                 </>
               </Link>
-              {/* lil cursor blinker */}
               <div
                 className={`${blinkyOn ? "animate-pulse" : "opacity-0"} h-[28px] bg-gray-500/70 w-[2px]`}
               ></div>
-              {/* <NavSponsor /> */}
-              {/* <div
-                  className={`hidden md:block my-auto duration-300 ease-in-out`}
-                >
-                  <WMCounter />
-                </div> */}
 
               <div className="">
                 <SearchModal />
               </div>
             </div>
-            {/* <div className="flex flex-1 items-center justify-center items-stretch justify-between"> */}
             <div className="flex items-center h-9">
               <div className="hidden sm:ml-6 lg:block">
                 <MenuItems />
               </div>
-              {/* <div className="justify-end hidden xl:flex mr-6">
-                {[
-                  { label: "Home", url: "/" },
-                  { label: "Toolbox", url: "/toolbox" },
-                  { label: "Topics", url: "/topics" },
-                  { label: "Jobs", url: "/jobs" },
-                  // { label: "Sponsor", url: "/sponsor" },
-                ].map((tab) => {
-                  return (
-                    <div className="mx-1 flex flex-col justify-center">
-                      <ActiveLinkNewMenu href={tab.url}>
-                        {tab.label}
-                      </ActiveLinkNewMenu>
-                    </div>
-                  );
-                })}
-              </div> */}
             </div>
             <div
               className={`items-center sm:static sm:inset-auto flex ${
                 user?.isLoggedin ? "mr-[52px] sm:mr-16" : "lg:mr-0"
               }`}
             >
-              {/* <div className={`hidden mr-2 md:block my-auto`}>
-                <WMButton />
-              </div> */}
-              {/* <div className={`hidden mr-2 md:block my-auto`}>
-                  <WMButton />
-                </div> */}
-
               <NavigationMenu>
                 <NavigationMenuList>
                   <LocationMenu
@@ -235,14 +182,9 @@ const Navbar = ({
         >
           <div className="space-y-1 px-2 pt-2 pb-3">
             <MobileActiveLink href={"/"}>Home</MobileActiveLink>
-            {/* <MobileActiveLink href={"/topics"}>Topics</MobileActiveLink> */}
             <MobileActiveLink href={"/toolbox"}>Toolbox</MobileActiveLink>
-            {/* <MobileActiveLink href={"/jobs"}>Jobs</MobileActiveLink> */}
             <MobileActiveLink href={"/topics"}>Topics</MobileActiveLink>
             <MobileActiveLink href={"/people"}>People</MobileActiveLink>
-            {/* <MobileActiveLink href={"/web-monetization"}>
-              Earn Micropayments
-            </MobileActiveLink> */}
             {!user?.isLoggedIn ? (
               <MobileActiveLink href={"/onboard"}>Sign in</MobileActiveLink>
             ) : (

@@ -11,7 +11,7 @@ export default class MyDocument extends Document {
             dangerouslySetInnerHTML={{ __html: getCssText() }}
           />
         </Head>
-        <body className={''}>
+        <body>
           <Main />
           <NextScript />
         </body>
