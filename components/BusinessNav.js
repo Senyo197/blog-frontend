@@ -4,7 +4,7 @@ import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import useUser from "@/lib/iron-session/useUser";
 import { useState, useEffect } from "react";
 import jsCookie from "js-cookie";
-import UndoRedoButtons from "tiptypr/dist/UndoRedoButtons";
+import UndoRedoButtons from "tiptypr";
 const NavigationMenuDemo = dynamic(() => import("./navbar-menu"), {
   ssr: true,
 });
@@ -131,9 +131,6 @@ export default function BusinessNav({
                 <span className="text-lg font-semibold text-gray-700">
                   Business hub
                 </span>
-                {/* <span className="p-2 py-0.5 text-xs bg-blue-400 bg-opacity-20 text-blue-600 rounded-full border border-blue-200">
-                Beta
-              </span> */}
               </div>
               <div className="my-auto ml-3">{statusComponent}</div>
               {/* Undo/redo */}

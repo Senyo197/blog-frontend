@@ -10,7 +10,7 @@ import Button from "@/components/Primitives/Button";
 import MiniEditor from "@/components/MiniEditor/MiniEditor";
 // import useLoad from "../hooks/useLoad";
 import { useWizardContext } from "react-sweet-wizard";
-import Editor from "tiptypr/dist/Editor";
+import Editor from "tiptypr";
 import { ToggleSwitch } from "@/components/atom/Switch/switch";
 const Spinner = dynamic(() => import("@/components/atom/Spinner/Spinner"));
 const axios = require("axios");
@@ -72,7 +72,7 @@ const Form = ({ user, postObject, isEditMode }) => {
     },
     validationSchema: FormSchema,
 
-    onSubmit: async values => {
+    onSubmit: async (values) => {
       //strip html tags and get plain text
       var el = document.createElement("div");
       el.innerHTML = values?.excerpt;
@@ -86,7 +86,7 @@ const Form = ({ user, postObject, isEditMode }) => {
       //turn postObject.creators array into an array of ids (from each element.id)
       let creatorIds = [];
       if (postObject?.creators?.length) {
-        creatorIds = postObject?.creators?.map(creator => creator.id);
+        creatorIds = postObject?.creators?.map((creator) => creator.id);
       }
       if (values.isCreator) {
         //add user id to the array of creator ids if it's not already there
@@ -96,7 +96,7 @@ const Form = ({ user, postObject, isEditMode }) => {
       } else {
         // remove user id from the array of creator ids if it's there
         if (creatorIds.includes(user.id)) {
-          creatorIds = creatorIds.filter(id => id !== user.id);
+          creatorIds = creatorIds.filter((id) => id !== user.id);
         }
       }
       values.creators = creatorIds;
@@ -156,7 +156,8 @@ const Form = ({ user, postObject, isEditMode }) => {
   const [excerpt, setExcerpt] = useState(postObject?.excerpt);
   const [isCreator, setIsCreator] = useState(
     postObject?.creators?.length &&
-      postObject.creators.find(creator => creator.id === user.id) !== undefined
+      postObject.creators.find((creator) => creator.id === user.id) !==
+        undefined
   );
 
   useEffect(() => {
@@ -166,9 +167,10 @@ const Form = ({ user, postObject, isEditMode }) => {
     if (!excerpt) {
       setExcerpt(postObject?.excerpt);
     }
-    let iscreatr = postObject?.creators?.length &&
-    postObject.creators.find(creator => creator.id === user.id) !==
-      undefined
+    let iscreatr =
+      postObject?.creators?.length &&
+      postObject.creators.find((creator) => creator.id === user.id) !==
+        undefined;
 
     setIsCreator(iscreatr);
     formik.setFieldValue("isCreator", iscreatr);
@@ -205,7 +207,7 @@ const Form = ({ user, postObject, isEditMode }) => {
 
       <form
         className="mt-6"
-        onSubmit={e => {
+        onSubmit={(e) => {
           e.preventDefault();
           if ((errors && isEmptyObject(errors)) || !errors) {
             setDisabled(false);
@@ -228,7 +230,7 @@ const Form = ({ user, postObject, isEditMode }) => {
                 title=""
                 disabled={isSubmitting}
                 placeholder="Unicorn platform is a landing page builder for SaaS products. Build and launch your marketing site in no time!"
-                setDescription={html => {
+                setDescription={(html) => {
                   formik.setFieldValue("excerpt", html);
                   setExcerpt(html);
                 }}

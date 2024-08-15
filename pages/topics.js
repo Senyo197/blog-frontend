@@ -110,32 +110,32 @@ export default function Index({
       tagline="Open Web"
       headingSize={'text-2xl mb-4'}/> */}
         <div className="-mt-4">
-          <TagsNavRow currentPage={'topics'} />
+          <TagsNavRow currentPage={"topics"} />
         </div>
 
         <SectionDivider py="py-1" transparentLine={true} />
         {/* <Container maxWidth="max-w-[1320px]"> */}
-          {TOPICS_PAGE?.map((topic, index) => {
-            return (
-              <div key={`section_${index}`}>
-                <TopicIndexSection
-                  index={index}
-                  title={topic.name}
-                  topicObject={topic}
-                  user={user}
-                  // heroCardPost={topicRes[topic.slug]?.posts[0]}
-                  viewablePosts={topicRes[topic.slug]?.posts?.slice(0, 4)}
-                />
-                <SectionDivider py="py-2" transparentLine={true} />
-              </div>
-            );
-          })}
+        {TOPICS_PAGE?.map((topic, index) => {
+          return (
+            <div key={`section_${index}`}>
+              <TopicIndexSection
+                index={index}
+                title={topic.name}
+                topicObject={topic}
+                user={user}
+                // heroCardPost={topicRes[topic.slug]?.posts[0]}
+                viewablePosts={topicRes[topic.slug]?.posts?.slice(0, 4)}
+              />
+              <SectionDivider py="py-2" transparentLine={true} />
+            </div>
+          );
+        })}
 
-          {/* <div className="mt-2 rounded-xl bg-white shadow-sm p-6 md:p-10">
+        {/* <div className="mt-2 rounded-xl bg-white shadow-sm p-6 md:p-10">
             <h2 className="text-lg mb-6 font-semibold">Popular topics</h2> */}
-            {/* <PopularTagsSection popularTags={popularTags}/> */}
-            {/* <JumboTagsSection popularTags={popularTags}/> */}
-            {/* <div className="grid grid-cols-12 xs:gap-4 md:gap-6 lg:gap-6">
+        {/* <PopularTagsSection popularTags={popularTags}/> */}
+        {/* <JumboTagsSection popularTags={popularTags}/> */}
+        {/* <div className="grid grid-cols-12 xs:gap-4 md:gap-6 lg:gap-6">
               {popularTags.slice(0, 12).map((topic, i) => (
                 <JumboTagC
                   withBackground={true}
@@ -145,14 +145,14 @@ export default function Index({
                 />
               ))}
             </div> */}
-          {/* </div> */}
+        {/* </div> */}
         {/* </Container> */}
         <SectionDivider py="py-1" transparentLine={true} />
         {/* <Container maxWidth="max-w-[1320px] pb-24 mt-1"> */}
         <Container padding={false} maxWidth="max-w-[1320px] mx-auto mb-8 px-3">
           {/* <div className="rounded-3xl p-3 relative md:p-10 shadow bg-white"> */}
           <div className="relative">
-          {/* <img src='/static/images/toolbox/squares2.svg' className="-scale-x-100 rounded-xl opacity-30  absolute w-full h-full object-cover top-0 left-0"/> */}
+            {/* <img src='/static/images/toolbox/squares2.svg' className="-scale-x-100 rounded-xl opacity-30  absolute w-full h-full object-cover top-0 left-0"/> */}
             <div className="z-20 relative">
               <h2 className="text-2xl mb-3 font-semibold">All topics</h2>
               <div className="pt-4 rounded-xl grid grid-cols-1 gap-y-6 gap-x-6 md:gap-y-6 md:gap-x-6 sm:grid-cols-2 xl:grid-cols-4">
@@ -167,7 +167,7 @@ export default function Index({
                 ))}
               </div>
             </div>
-            </div>
+          </div>
         </Container>
         {/* </Container> */}
 
@@ -175,7 +175,7 @@ export default function Index({
           {/* <h2 className={`text-xl mb-6 font-medium`}>
         Featured Topics
       </h2> */}
-          <div className="flex flex-col grid gap-4 md:gap-4 xl:gap-6 grid-cols-12">
+          <div className="flex-col grid gap-4 md:gap-4 xl:gap-6 grid-cols-12">
             {featuredSections.map((post, i) => {
               return (
                 <Link
@@ -249,8 +249,8 @@ export async function getStaticProps({ preview = null }) {
     a.name.toLowerCase() > b.name.toLowerCase()
       ? 1
       : b.name.toLowerCase() > a.name.toLowerCase()
-      ? -1
-      : 0
+        ? -1
+        : 0
   );
 
   /**
@@ -280,7 +280,7 @@ export async function getStaticProps({ preview = null }) {
   /**
    * topic sections end
    */
-  const {navSponsor, sponsors} = await getSponsors();
+  const { navSponsor, sponsors } = await getSponsors();
 
   return {
     props: {

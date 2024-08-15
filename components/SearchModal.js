@@ -43,7 +43,7 @@ const filter_options = [
   { name: "Tool", filter: "type=tool" },
 ];
 
-const SearchModal = props => {
+const SearchModal = (props) => {
   const [activeFilter, setActiveFilter] = useState(filter_options[0]?.filter);
   const [submitOpen, setSubmitOpen] = useState(null);
 
@@ -63,8 +63,8 @@ const SearchModal = props => {
   return (
     <Dialog onOpenChange={toggleSubmitOpen} open={submitOpen}>
       <DialogTrigger asChild>
-        <div className="flex my-auto cursor-text hover:bg-blue-50 cursor-pointer ml-3 bg-gray-200/60 p-2 lg:p-0 lg:px-4 lg:pl-2 w-fit lg:w-[120px] h-[32px] rounded-full text-gray-600 text-sm">
-            <MagnifyingGlass className={'my-auto'} size={18}  weight="bold" />
+        <div className="flex my-auto hover:bg-blue-50 cursor-pointer ml-3 bg-gray-200/60 p-2 lg:p-0 lg:px-4 lg:pl-2 w-fit lg:w-[120px] h-[32px] rounded-full text-gray-600 text-sm">
+          <MagnifyingGlass className={"my-auto"} size={18} weight="bold" />
           <div className="hidden lg:block ml-2 my-auto font-base">Search</div>
         </div>
       </DialogTrigger>
@@ -91,7 +91,7 @@ const SearchModal = props => {
                     <select
                       id="location"
                       className="w-[100px]"
-                      onChange={e => {
+                      onChange={(e) => {
                         setActiveFilter(
                           filter_options[parseInt(e.target.value, 10)]?.filter
                         );
@@ -139,7 +139,7 @@ const Hit = ({ hit }) => {
             hit={hit}
           />
           <div className="mt-1.5">
-            <span className="capitalize text-xs capitalize bg-gray-100  px-3 py-0.5 border border-black border-opacity-5 text-gray-500 rounded-full">
+            <span className="text-xs capitalize bg-gray-100  px-3 py-0.5 border border-black border-opacity-5 text-gray-500 rounded-full">
               {hit.type}
             </span>
           </div>
@@ -167,7 +167,7 @@ const SearchResultImage = ({ image, hit }) => {
   );
 };
 
-const getImage = hit => {
+const getImage = (hit) => {
   if (hit) {
     if (hit.legacyMedia?.logoNew) {
       return hit.legacyMedia?.logoNew;
@@ -185,7 +185,7 @@ const getImage = hit => {
   }
 };
 
-const getLink = hit => {
+const getLink = (hit) => {
   if (hit.type == "article") {
     return `${process.env.NEXT_PUBLIC_HOME_URL}/post/${hit.slug}`;
   }

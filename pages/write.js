@@ -1,12 +1,12 @@
 import useUser from "@/lib/iron-session/useUser";
 import { getUserArticle, getSlugFromArticleId } from "@/lib/api";
 import dynamic from "next/dynamic";
-const EditorWrapper = dynamic(() => import("tiptypr/dist/EditorWrapper"), {
-  ssr: false
+const EditorWrapper = dynamic(() => import("tiptypr"), {
+  ssr: false,
 });
 // import 'tiptypr/dist/styles.css';
-import 'tippy.js/dist/svg-arrow.css';
-import 'tippy.js/animations/scale-subtle.css';
+import "tippy.js/dist/svg-arrow.css";
+import "tippy.js/animations/scale-subtle.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 /**

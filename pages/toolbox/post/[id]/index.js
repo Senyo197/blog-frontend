@@ -19,23 +19,11 @@ import TitleLinkFormEdit from "@/components/toolbox/forms/TitleLinkFormEdit";
 import useLoad from "@/components/toolbox/hooks/useLoad";
 import Fallback from "@/components/atom/Fallback/Fallback";
 import MediaForm from "@/components/toolbox/forms/MediaForm";
-// import Link from "next/link";
-// import Button from "@/components/Primitives/Button";
 import DealForm from "@/components/toolbox/forms/DealForm";
 import { PublishToolDialog } from "@/components/toolbox/forms/PublishToolDialog";
 import ToolIconCard from "@/components/v4/card/ToolIconCard";
 import Button from "@/components/Primitives/Button";
 import { addSupportScript } from "@/lib/addSupportScript";
-
-// const Progress = () => {
-//   const { activeStepIndex, steps } = useWizardContext();
-
-//   return (
-//     <div>
-//       Step {parseInt(activeStepIndex, 10)+1} of {steps.length}
-//     </div>
-//   );
-// };
 
 const MenuItems = [
   { title: "Title and Link" },
@@ -73,22 +61,6 @@ const Menu = ({ post, refetchPost }) => {
           </div>
         );
       })}
-      {/* only show done step if info is there */}
-      {/* {!post.published_at &&
-      post?.logo?.id &&
-      post?.gallery?.length &&
-      activeStepIndex > 3 ? (
-        <div
-          onClick={() => {
-            goTo(4);
-          }}
-          className={`p-3 w-full cursor-pointer rounded-lg mb-2 ${lastStepActive ? "bg-blue-100 font-semibold" : ""}`}
-        >
-          Done
-        </div>
-      ) : (
-        ""
-      )} */}
     </div>
   );
 };
@@ -193,13 +165,13 @@ const ToolPostForm = ({ user, isOwner, postObject, refetchPost, loading }) => {
                 {/* <LoginSide showArrow={false} title="Submit a tool or resource" user={user} /> */}
               </div>
             </div>
-                {/* <Progress/> */}
-                <ToolSteps
-                  loading={loading}
-                  refetchPost={refetchPost}
-                  postObject={postObject}
-                  user={user}
-                />
+            {/* <Progress/> */}
+            <ToolSteps
+              loading={loading}
+              refetchPost={refetchPost}
+              postObject={postObject}
+              user={user}
+            />
           </div>
         </WizardProvider>
       ) : !(user && !user?.isLoggedIn) ? (
@@ -295,172 +267,143 @@ const ToolSteps = ({ user, postObject, refetchPost, loading }) => {
       });
   };
 
-
   return (
-    <div className={`col-span-12 md:col-span-6 ${activeStepIndex==2?'lg:col-span-8':'lg:col-span-6'} mb-12`}>
-
-    <div className="bg-white border border-gray-300/70 shadow-sm rounded-xl p-6 step-wizard">
-
-    <Steps>
-      <Step key={`page/1`} id={"1"}>
-        <div className="flex items-center justify-start h-full w-full relative">
-          <TitleLinkFormEdit
-            refetchPost={refetchPost}
-            loading={loading}
-            onNext={onNext}
-            postObject={postObject}
-            user={user}
-            isEditMode={postObject?.published_at}
-          />
-        </div>
-      </Step>
-      <Step key={`page/2`} id={"2"}>
-        <div className="flex flex-col justify-start h-full w-full relative">
-          <DescriptionExcerptForm
-            isEditMode={postObject?.published_at}
-            postObject={postObject}
-            loading={loading}
-            user={user}
-          />
-        </div>
-      </Step>
-      <Step key={`page/3`} id={"3"}>
-        <div className="flex flex-col justify-start h-full w-full relative">
-          <MediaForm
-            refetchPost={refetchPost}
-            postObject={postObject}
-            loading={loading}
-            user={user}
-            isEditMode={postObject?.published_at}
-          />
-        </div>
-      </Step>
-      <Step key={`page/4`} id={"4"}>
-        <div className="flex items-center justify-start h-full w-full relative">
-          <div className="px-6 md:px-0 max-w-2xl pt-6 w-full">
-            <DealForm
-              isEditMode={postObject?.published_at}
-              postObject={postObject}
-              loading={loading}
-              refetchPost={refetchPost}
-              user={user}
-            />
-          </div>
-        </div>
-      </Step>
-      <Step key={`page/5`} id={"5"}>
-        <div className="flex items-center justify-start h-full w-full relative">
-          <div className="px-6 md:px-0 max-w-2xl w-full">
-            <div className="my-2">
-              <>
-                <h1 className="text-2xl font-semibold mx-auto mb-2">
-                  {postObject.status == "draft"
-                    ? "Submit for review"
-                    : postObject.status == "pending"
-                      ? "Pending review"
-                      : postObject.status == "publish"
-                        ? "Your post is live 🎉"
-                        : "Thanks for your submission!"}
-                </h1>
-                <p className="text-lg mt-4 text-gray-600">
-                  {postObject.status == "draft" ? (
-                    "Your tool is saved as a draft. You can edit it anytime."
-                  ) : postObject.status == "pending" ? (
-                    "Thanks for your submission, your post is awaiting review. We will notify you when it is live. You can still make changes."
-                  ) : postObject.status == "publish" ? (
-                    <>
-                      Your tool has been published. Thank you for contributing!
-                    </>
-                  ) : (
-                    "Your tool is saved as a draft. You can edit it anytime."
-                  )}
-                </p>
-                {postObject.status == "publish" ? (
-                  <div className="mt-8">
-                    <ToolIconCard
-                      tool={postObject}
-                      logo={
-                        postObject?.logo?.url
-                          ? postObject?.logo?.url
-                          : postObject?.legacyLogo
-                            ? postObject.legacyLogo
-                            : null
-                      }
-                      small={true}
-                      withBackground={true}
-                    />
-                  </div>
-                ) : (
-                  <PostPreview postObject={postObject} />
-                )}
-              </>
-
-              {/* <p className="text-lg mt-4 mb-4 text-gray-600">
-                If you have a special offer or discount for the Prototypr
-                audience, you can also create an offer for your tool to be
-                featured on our Designer Deals page.
-              </p> */}
-              {/* <Link href={`/toolbox/post/${postObject?.id}/deal`}>
-                <Button variant="confirmMedium">
-                  Add a deal
-                </Button>
-              </Link> */}
-              {/* <div className="ml-3"> */}
-              {/* <Link href="/dashboard">
-                  <Button
-                    className="p-4 mt-6 bg-blue-700 text-white font-semibold rounded-full disabled:bg-gray-300 hover:bg-blue-600 disabled:cursor-not-allowed"
-                    variant="confirmMediumSecondary"
-                  >
-                    Submit
-                  </Button>
-                </Link> */}
-              {postObject.status == "draft" ? (
-                <div className="flex mt-8">
-                  <PublishToolDialog
-                    saving={publishing}
-                    onSave={onSubmitForPublishing}
-                  />
-                </div>
-              ) : (
-                <>
-                  <p className="text-gray-700 mt-8">
-                    Any questions? Please contact support.
-                  </p>
-                  <Button
-                    className="mt-3 rounded-full"
-                    onClick={() => {
-                      // console.log(user)
-                      // pop up chat
-                      // window.$chatwoot?.setUser(user?.id, {
-                      //   claimId: post?.id,
-                      //   claimName: post?.attributes?.title,
-                      // });
-                      console.log(window.$chat)
-                      if (!window?.$chatwoot) {
-                        addSupportScript();
-                        setTimeout(() => {
-                          window?.$chatwoot?.toggle();
-                        }, 1000);
-                      } else {
-                        window?.$chatwoot?.toggle();
-                      }
-                      // window.$chatwoot.popoutChatWindow();
-
-                      // woot-widget-bubble
-                    }}
-                    type="button"
-                  >
-                    Ask support
-                  </Button>
-                </>
-              )}
-              {/* </div> */}
+    <div
+      className={`col-span-12 md:col-span-6 ${activeStepIndex == 2 ? "lg:col-span-8" : "lg:col-span-6"} mb-12`}
+    >
+      <div className="bg-white border border-gray-300/70 shadow-sm rounded-xl p-6 step-wizard">
+        <Steps>
+          <Step key={`page/1`} id={"1"}>
+            <div className="flex items-center justify-start h-full w-full relative">
+              <TitleLinkFormEdit
+                refetchPost={refetchPost}
+                loading={loading}
+                onNext={onNext}
+                postObject={postObject}
+                user={user}
+                isEditMode={postObject?.published_at}
+              />
             </div>
-          </div>
-        </div>
-      </Step>
-    </Steps>
-    </div>
+          </Step>
+          <Step key={`page/2`} id={"2"}>
+            <div className="flex flex-col justify-start h-full w-full relative">
+              <DescriptionExcerptForm
+                isEditMode={postObject?.published_at}
+                postObject={postObject}
+                loading={loading}
+                user={user}
+              />
+            </div>
+          </Step>
+          <Step key={`page/3`} id={"3"}>
+            <div className="flex flex-col justify-start h-full w-full relative">
+              <MediaForm
+                refetchPost={refetchPost}
+                postObject={postObject}
+                loading={loading}
+                user={user}
+                isEditMode={postObject?.published_at}
+              />
+            </div>
+          </Step>
+          <Step key={`page/4`} id={"4"}>
+            <div className="flex items-center justify-start h-full w-full relative">
+              <div className="px-6 md:px-0 max-w-2xl pt-6 w-full">
+                <DealForm
+                  isEditMode={postObject?.published_at}
+                  postObject={postObject}
+                  loading={loading}
+                  refetchPost={refetchPost}
+                  user={user}
+                />
+              </div>
+            </div>
+          </Step>
+          <Step key={`page/5`} id={"5"}>
+            <div className="flex items-center justify-start h-full w-full relative">
+              <div className="px-6 md:px-0 max-w-2xl w-full">
+                <div className="my-2">
+                  <>
+                    <h1 className="text-2xl font-semibold mx-auto mb-2">
+                      {postObject.status == "draft"
+                        ? "Submit for review"
+                        : postObject.status == "pending"
+                          ? "Pending review"
+                          : postObject.status == "publish"
+                            ? "Your post is live 🎉"
+                            : "Thanks for your submission!"}
+                    </h1>
+                    <p className="text-lg mt-4 text-gray-600">
+                      {postObject.status == "draft" ? (
+                        "Your tool is saved as a draft. You can edit it anytime."
+                      ) : postObject.status == "pending" ? (
+                        "Thanks for your submission, your post is awaiting review. We will notify you when it is live. You can still make changes."
+                      ) : postObject.status == "publish" ? (
+                        <>
+                          Your tool has been published. Thank you for
+                          contributing!
+                        </>
+                      ) : (
+                        "Your tool is saved as a draft. You can edit it anytime."
+                      )}
+                    </p>
+                    {postObject.status == "publish" ? (
+                      <div className="mt-8">
+                        <ToolIconCard
+                          tool={postObject}
+                          logo={
+                            postObject?.logo?.url
+                              ? postObject?.logo?.url
+                              : postObject?.legacyLogo
+                                ? postObject.legacyLogo
+                                : null
+                          }
+                          small={true}
+                          withBackground={true}
+                        />
+                      </div>
+                    ) : (
+                      <PostPreview postObject={postObject} />
+                    )}
+                  </>
+                  {postObject.status == "draft" ? (
+                    <div className="flex mt-8">
+                      <PublishToolDialog
+                        saving={publishing}
+                        onSave={onSubmitForPublishing}
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      <p className="text-gray-700 mt-8">
+                        Any questions? Please contact support.
+                      </p>
+                      <Button
+                        className="mt-3 rounded-full"
+                        onClick={() => {
+                          console.log(window.$chat);
+                          if (!window?.$chatwoot) {
+                            addSupportScript();
+                            setTimeout(() => {
+                              window?.$chatwoot?.toggle();
+                            }, 1000);
+                          } else {
+                            window?.$chatwoot?.toggle();
+                          }
+                        }}
+                        type="button"
+                      >
+                        Ask support
+                      </Button>
+                    </>
+                  )}
+                  {/* </div> */}
+                </div>
+              </div>
+            </div>
+          </Step>
+        </Steps>
+      </div>
     </div>
   );
 };
@@ -496,7 +439,7 @@ const PostPreview = ({ postObject }) => {
             className="w-[100px] h-[100px] border border-gray-100/80 rounded-xl object-cover"
             src={postObject.logo?.url}
           />
-          {postObject.gallery.map(image => {
+          {postObject.gallery.map((image) => {
             return (
               <img
                 className="w-[100px] h-[100px] border border-gray-100/80 rounded-xl object-cover"
